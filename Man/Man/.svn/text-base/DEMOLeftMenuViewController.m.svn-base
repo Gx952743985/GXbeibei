@@ -1,0 +1,250 @@
+//
+//  DEMOMenuViewController.m
+//  RESideMenuExample
+//
+//  Created by Roman Efimov on 10/10/13.
+//  Copyright (c) 2013 Roman Efimov. All rights reserved.
+//
+
+#import "DEMOLeftMenuViewController.h"
+#import "DEMOFirstViewController.h"
+#import "DEMOSecondViewController.h"
+#import "Masonry.h"                     //适配
+#import "MenuTableViewCell.h"           //第三方库
+#import "SingletonManager.h"          
+#import "UIImageView+WebCache.h"//图片请求
+#import "DataModels.h"
+
+
+
+#import "ThreeViewController.h"
+#import "FourViewController.h"
+#import "FiveViewController.h"
+#import "SixViewController.h"
+#import "SevenViewController.h"
+#import "ColleTableViewController.h"
+#import "MoreTableViewController.h"
+
+
+
+#define S_WIDTH CGRectGetWidth([UIScreen mainScreen].bounds) //屏幕宽度
+#define S_HEIGHT CGRectGetHeight([UIScreen mainScreen].bounds) //屏幕高度
+
+
+@interface DEMOLeftMenuViewController ()
+
+@property (strong, readwrite, nonatomic) UITableView *tableView;
+@property (nonatomic,retain)NSMutableArray *Menuarry;
+@property (nonatomic,retain)NSMutableArray *urlidArr;
+@end
+
+@implementation DEMOLeftMenuViewController
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    
+    
+    
+    NSString *url=@"http://iapi.ipadown.com/api/yangshen/left.category.api.php?siteid=2&catename=男性保健&type=0";
+    [SingletonManager GXMenulisturl:url completion:^(NSMutableArray *dic) {
+    [_Menuarry setArray:dic];
+    [self.tableView  reloadData];
+    }];
+    //下个连接
+    [SingletonManager GXlisturl:@"http://dailyapi.ibaozou.com/api/v1/sections" completion:^(NSDictionary *dic) {
+        NSLog(@"%@",dic);
+        ZLBase *model=[ZLBase modelObjectWithDictionary:dic];
+        NSArray *arr  =model.data;
+        ZLData *p =arr[0];
+        
+        NSLog(@"------%f",p.dataIdentifier);
+        [arr enumerateObjectsUsingBlock:^(ZLData * obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            ZLData *pp=arr[idx];
+            NSLog(@"++%f",pp.dataIdentifier);
+            NSString *s=[NSString stringWithFormat:@"http://dailyapi.ibaozou.com/api/v1/section/%.0f",pp.dataIdentifier];
+            NSLog(@"%@",s);
+            [_urlidArr addObject:s];
+        }];
+    }];
+
+    
+    
+    
+    
+}
+
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor=[UIColor clearColor];
+    _Menuarry=[NSMutableArray array];
+    _urlidArr=[NSMutableArray array];
+    self.tableView = ({
+        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+      tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+        tableView.delegate = self;
+        tableView.dataSource = self;
+      tableView.opaque = NO;
+        tableView.backgroundColor = [UIColor clearColor];
+        tableView.backgroundView = nil;
+       tableView.separatorColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:0.5];
+      tableView.bounces = NO;
+        tableView.showsVerticalScrollIndicator = NO;
+        tableView;
+    });
+    [self.view addSubview:self.tableView];
+
+    [self.tableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).with.offset(5.0f);
+        make.right.equalTo(self.view.mas_right).with.offset(320/5*2.5-
+                                                            320);
+        make.top.equalTo(self.view.mas_top).with.offset(30.0f);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-20.0f);
+    }];
+    [self.tableView registerClass:[MenuTableViewCell class] forCellReuseIdentifier:@"cell"];
+    
+    
+
+}
+
+#pragma mark -
+#pragma mark UITableView Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch (indexPath.row) {
+        case 0:
+        {
+            DEMOFirstViewController *demvc=[[DEMOFirstViewController alloc] init];
+            demvc.urlstr=_urlidArr[indexPath.row];
+            
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:demvc]
+                                                         animated:YES];
+            [self.sideMenuViewController hideMenuViewController];
+        }
+            break;
+        case 1:
+        {
+            
+            DEMOSecondViewController *DEMOSECVC=[[DEMOSecondViewController alloc] init];
+            DEMOSECVC.strurl=_urlidArr[indexPath.row];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:DEMOSECVC]
+                                                         animated:YES];
+            [self.sideMenuViewController hideMenuViewController];
+            
+            
+            
+        }
+            break;
+        case 2:
+        {
+            ThreeViewController*THvc=[[ThreeViewController alloc] init];
+            THvc.strurl=_urlidArr[indexPath.row];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:THvc]
+                                                         animated:YES];
+            [self.sideMenuViewController hideMenuViewController];
+        }
+            break;
+//
+        case 3:
+        {
+            FourViewController *FouVC=[[FourViewController alloc] init];
+             FouVC.strurl=_urlidArr[indexPath.row];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:FouVC]
+                                                         animated:YES];
+            [self.sideMenuViewController hideMenuViewController];
+        }
+            break;
+
+        case 4:
+        {
+            FiveViewController *FieVC=[[FiveViewController alloc] init];
+            FieVC.strurl=_urlidArr[indexPath.row];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:FieVC]
+                                                         animated:YES];
+            [self.sideMenuViewController hideMenuViewController];
+        }
+            break;
+        case 5:
+        {
+           SixViewController*siVC= [[SixViewController alloc] init];
+            siVC.strurl=_urlidArr[indexPath.row];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:siVC]
+                                                         animated:YES];
+            [self.sideMenuViewController hideMenuViewController];
+        }
+            break;
+//
+        case 6:
+        {
+            SevenViewController*Sevc= [[SevenViewController alloc] init];
+            Sevc.strurl=_urlidArr[indexPath.row];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:Sevc]
+                                                         animated:YES];
+            [self.sideMenuViewController hideMenuViewController];
+        }
+            break;
+
+
+            
+        case 7:
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[ColleTableViewController alloc] init]]
+                                                         animated:YES];
+            [self.sideMenuViewController hideMenuViewController];
+            break;
+        case 8:
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[MoreTableViewController alloc] init]]
+                                                         animated:YES];
+            [self.sideMenuViewController hideMenuViewController];
+            break;
+
+        default:
+            break;
+    }
+}
+
+#pragma mark -
+#pragma mark UITableView Datasource
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
+{
+    return _Menuarry.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+        MenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    if (_Menuarry.count)
+    {
+        NSMutableDictionary *dic=[_Menuarry objectAtIndex:indexPath.row];
+        
+     [cell.icoImg  sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"icon"]]];
+        cell.MenuLB.text=[dic objectForKey:@"title"];
+      cell.selectionStyle = UITableViewCellSelectionStyleNone;
+      cell.backgroundColor = [UIColor clearColor];
+   
+    }
+    
+    
+    return cell;
+}
+
+@end

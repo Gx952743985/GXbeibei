@@ -1,0 +1,205 @@
+//
+//  ListTableViewController.m
+//  Man
+//
+//  Created by 耿鑫 on 16/3/5.
+//  Copyright © 2016年 zhiyou. All rights reserved.
+//
+
+#import "ListTableViewController.h"
+#import "MJRefresh.h"
+#import "ListTableViewCell.h"
+#import "SingletonManager.h"
+#import "DataModels.h"
+#import "UIImageView+WebCache.h"//图片请求
+#import "URlViewController.h"
+
+
+@interface ListTableViewController ()
+@property(nonatomic,retain) NSMutableArray *articlesArr;
+@property(nonatomic,retain)ZLBata *zla;
+@end
+
+@implementation ListTableViewController
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [SingletonManager GXlisturl:_urlstr completion:^(NSDictionary *dic) {
+    _zla=[ZLBata modelObjectWithDictionary:dic];
+    [_articlesArr setArray:_zla.articles];
+    [self.tableView reloadData];
+    }];
+    
+
+}
+
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    _articlesArr=[NSMutableArray array];
+
+    
+    
+    //下拉刷新
+    MJRefreshHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        //清空数组
+        [_articlesArr removeAllObjects];
+        
+        [SingletonManager GXlisturl:_urlstr completion:^(NSDictionary *dic) {
+           
+            ZLBata *p=[ZLBata modelObjectWithDictionary:dic];
+            [_articlesArr setArray:p.articles];
+            [self.tableView reloadData];
+            [self.tableView.mj_header endRefreshing];
+        }];
+
+        
+    }];
+    
+    self.tableView.mj_header = header;
+
+    header.automaticallyChangeAlpha=YES;
+    
+    //上拉刷新
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        NSString *str=[NSString stringWithFormat:@"http://dailyapi.ibaozou.com/api/v1/section/9/before/%.0f",_zla.timestamp];
+        
+        [SingletonManager GXlisturl:str completion:^(NSDictionary *dic) {
+            self.tableView.mj_footer.hidden = NO;
+            if (dic) {
+                ZLBata *p=[ZLBata modelObjectWithDictionary:dic];
+                [_articlesArr addObjectsFromArray:p.articles];
+                
+                
+                [self.tableView reloadData];
+               
+            }else{
+            
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            
+          
+        }];
+         self.tableView.mj_footer.hidden = YES;
+        
+    }];
+   
+   
+   //立刻刷新
+   //[self.tableView.mj_header beginRefreshing];
+    
+    //结束刷新
+//    [self.tableView.mj_header endRefreshing];
+ 
+    //1,使用系统提供的自动计算的动态值,对rowHeight进行赋值
+    self.tableView.rowHeight =UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 44;
+
+    
+    [self.tableView registerClass:[ListTableViewCell class] forCellReuseIdentifier:@"cell"];
+    
+//    [self.tableView registerClass:[LTableViewCell class] forCellReuseIdentifier:@"cell"];
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return 80;
+    
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+
+}
+- (void)loadmore
+{
+
+
+}
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    return _articlesArr.count;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     ZLArticles *p=_articlesArr[indexPath.row];
+    NSLog(@"%@",p.shareUrl);
+    URlViewController *urlVC=[[URlViewController alloc]init];
+    urlVC.uirlstr=p.shareUrl;
+    [self.navigationController pushViewController:urlVC animated:YES];
+
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    ListTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:@"cell"];
+  ZLArticles *p  =_articlesArr[indexPath.row];
+    
+    [cell.HeadImg sd_setImageWithURL:[NSURL URLWithString:p.thumbnail]];
+    
+    cell.nameLB.text=p.sectionName;
+    cell.nameLB.textColor=[SingletonManager initcolor:p.sectionColor];
+    cell.ContentLB.text=p.title;
+    
+    cell.Infor.text=[NSString stringWithFormat:@"%@|%@阅读",p.authorName,p.hitCountString];
+    
+    
+
+    return cell;
+}
+
+
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+*/
+
+/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
+}
+*/
+
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+}
+*/
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

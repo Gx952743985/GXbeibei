@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView
+END
+DefaultShouldSwipeDeterminator.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/DefaultShouldSwipeDeterminator.h
+END
+ZLSwipeableViewMovement.m
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/ZLSwipeableViewMovement.m
+END
+DefaultShouldSwipeDeterminator.m
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/DefaultShouldSwipeDeterminator.m
+END
+Utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/Utils.h
+END
+ZLSwipeableViewSwipeOptions.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/ZLSwipeableViewSwipeOptions.h
+END
+ViewManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/ViewManager.h
+END
+Utils.m
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/Utils.m
+END
+PanGestureRecognizer.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/PanGestureRecognizer.h
+END
+ZLSwipeableViewSwipeOptions.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/ZLSwipeableViewSwipeOptions.m
+END
+ViewManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/ViewManager.m
+END
+PanGestureRecognizer.m
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/PanGestureRecognizer.m
+END
+DefaultViewAnimator.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/DefaultViewAnimator.h
+END
+ZLSwipeableView.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/ZLSwipeableView.h
+END
+Scheduler.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/Scheduler.h
+END
+DefaultViewAnimator.m
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/DefaultViewAnimator.m
+END
+ZLSwipeableView.m
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/ZLSwipeableView.m
+END
+Scheduler.m
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/Scheduler.m
+END
+DefaultDirectionInterpretor.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/DefaultDirectionInterpretor.h
+END
+ZLSwipeableViewMovement.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/ZLSwipeableViewMovement.h
+END
+DefaultDirectionInterpretor.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MIan/!svn/ver/12/trunk/MIans/trunk/Man/Man/ZLSwipeableView/DefaultDirectionInterpretor.m
+END

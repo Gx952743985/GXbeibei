@@ -1,0 +1,130 @@
+//
+//  ListTableViewCell.m
+//  Man
+//
+//  Created by 耿鑫 on 16/3/5.
+//  Copyright © 2016年 zhiyou. All rights reserved.
+//
+
+#import "ListTableViewCell.h"
+#import "Masonry.h"
+@implementation ListTableViewCell
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        
+        
+        
+//        UIImageView *img=[[UIImageView alloc]initWithFrame:CGRectZero];
+//        img.image=[UIImage imageNamed:@"liveEffectButtonSelected"];
+//        [self.contentView addSubview:img];
+//        [img mas_makeConstraints:^(MASConstraintMaker *make)
+//         {
+//             //配置具体的约束信息。
+//             //Masonry 中的属性和 NSLayoutAttrubute 的对应关系请参考图 ‘Masonry属性和NSLayoutAttrubute对照表.jpg’。
+//             make.left.equalTo(self.contentView.mas_left).with.offset(0.0f);
+//             make.right.equalTo(self.contentView.mas_right).with.offset(0.0f);
+//             make.top.equalTo(self.contentView.mas_top).with.offset(0.0f);
+//             make.bottom.equalTo(self.contentView.mas_bottom).with.offset(0.0f);
+//             
+//         }];
+//头像
+        
+        
+        
+       _HeadImg=[[UIImageView alloc]initWithFrame:CGRectZero];
+       [self.contentView addSubview:_HeadImg];
+        [_HeadImg mas_makeConstraints:^(MASConstraintMaker *make)
+         {
+             //配置具体的约束信息。
+             //Masonry 中的属性和 NSLayoutAttrubute 的对应关系请参考图 ‘Masonry属性和NSLayoutAttrubute对照表.jpg’。
+             make.left.equalTo(self.contentView.mas_left).with.offset(10.0f);
+//             make.right.equalTo(self.contentView.mas_right).with.offset(-10.0f);
+             make.top.equalTo(self.contentView.mas_top).with.offset(10.0f);
+            make.height.equalTo(@60);
+             make.width.equalTo(@60);
+         }];
+        
+        
+        _nameLB=[[UILabel alloc]initWithFrame:CGRectZero];
+        [self.contentView addSubview:_nameLB];
+        _nameLB.numberOfLines=0;
+        _nameLB.font=[UIFont systemFontOfSize:8];
+        
+        
+        
+        
+        _ContentLB=[[UILabel alloc]initWithFrame:CGRectZero];
+        [self.contentView addSubview: _ContentLB];
+         _ContentLB.numberOfLines=0;
+         _ContentLB.font=[UIFont systemFontOfSize:8];
+     
+
+        
+        _Infor=[[UILabel alloc]initWithFrame:CGRectZero];
+        [self.contentView addSubview: _Infor];
+        _Infor.numberOfLines=0;
+        _Infor.font=[UIFont systemFontOfSize:8];
+        [_Infor mas_makeConstraints:^(MASConstraintMaker *make)
+         {
+             //配置具体的约束信息。
+             //Masonry 中的属性和 NSLayoutAttrubute 的对应关系请参考图 ‘Masonry属性和NSLayoutAttrubute对照表.jpg’。
+             make.left.equalTo(self.HeadImg.mas_right).with.offset(10.0f);
+             make.right.equalTo(self.contentView.mas_right).with.offset(-10.0f);
+             make.top.equalTo(_ContentLB.mas_bottom).with.offset(30.0f);
+             make.bottom.equalTo(self.contentView.mas_bottom).with.offset(-10.0f);
+
+             
+         }];
+
+        
+        
+        
+        [_nameLB mas_makeConstraints:^(MASConstraintMaker *make)
+         {
+             //配置具体的约束信息。
+             //Masonry 中的属性和 NSLayoutAttrubute 的对应关系请参考图 ‘Masonry属性和NSLayoutAttrubute对照表.jpg’。
+             make.left.equalTo(self.HeadImg.mas_right).with.offset(10.0f);
+             make.right.equalTo(self.contentView.mas_right).with.offset(-10.0f);
+             make.top.equalTo(self.contentView.mas_top).with.offset(10.0f);
+              make.bottom.equalTo(_ContentLB.mas_top).with.offset(-10.0f);
+//             make.height.equalTo(@20);
+             
+         }];
+
+        
+        
+        
+        [_ContentLB mas_makeConstraints:^(MASConstraintMaker *make)
+         {
+             //配置具体的约束信息。
+             //Masonry 中的属性和 NSLayoutAttrubute 的对应关系请参考图 ‘Masonry属性和NSLayoutAttrubute对照表.jpg’。
+             make.left.equalTo(self.HeadImg.mas_right).with.offset(10.0f);
+             make.right.equalTo(self.contentView.mas_right).with.offset(-10.0f);
+             make.top.equalTo(_nameLB.mas_bottom).with.offset(10.0f);
+            make.bottom.equalTo(_Infor.mas_top).with.offset(-10.0f);
+             
+         }];
+        
+        
+    
+
+        
+        
+        
+    }
+    return self;
+}
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+
+}
+
+@end
